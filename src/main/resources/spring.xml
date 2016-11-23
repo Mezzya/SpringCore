@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean id="client" class="ua.com.e2k.Client">
+        <constructor-arg value="1"/>
+        <constructor-arg value="Andrey Meg"/>
+    </bean>
+
+    <bean id="eventLogger" class="ua.com.e2k.ConsoleEventLogger" />
+
+    <bean id="app" class="ua.com.e2k.App">
+        <constructor-arg ref="client"/>
+        <constructor-arg ref="eventLogger"/>
+    </bean>
+
+    <bean id="event" class="ua.com.e2k.Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date"></bean>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+    </bean>
+
+    <bean id ="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"></bean>
+
+    <bean id="FileEventLogger" class="ua.com.e2k.FileEventLogger" init-method="init">
+        <constructor-arg value="springlogger.txt"/>
+    </bean>
+
+
+</beans>
